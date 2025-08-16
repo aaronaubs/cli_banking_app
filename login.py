@@ -1,6 +1,16 @@
 import users as u
 from prompt_toolkit import prompt
 
+def check_new_client():
+    """Checks whether the user is an existing client of the bank"""
+    print("Do you already have an account with us? (yes/no)")
+    while True:
+        user_input = input("> ").strip().lower()
+        if user_input == "yes" or user_input == "no":
+            return user_input
+        else:
+            print("Please enter 'yes' or 'no'")
+
 def get_username():
     """
     Gets user username input and verifies username exists in database, then returns username and user_id values

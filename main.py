@@ -6,20 +6,10 @@ def greet_client():
     print("*" * 40)
     print("Welcome to CLI Bank!")
     
-def check_new_client():
-    """Checks whether the user is an existing client of the bank"""
-    print("Do you already have an account with us? (yes/no)")
-    while True:
-        user_input = input("> ").strip().lower()
-        if user_input == "yes" or user_input == "no":
-            return user_input
-        else:
-            print("Please enter 'yes' or 'no'")
-    
 
 if __name__ == "__main__":
     greet_client()
-    user_input = check_new_client()
+    user_input = login.check_new_client()
     if user_input == "yes":
         print("\nWelcome back!")
         print("Please enter your username and password to log in")
