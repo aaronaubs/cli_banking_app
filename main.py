@@ -1,5 +1,6 @@
 import users as u
 import login
+import menu
 
 def greet_client():
     """Shows greeting message to user"""
