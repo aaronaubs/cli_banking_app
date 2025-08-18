@@ -1,39 +1,50 @@
 import users as u
 from prompt_toolkit import prompt
 
-def check_new_client():
-    """Checks whether the user is an existing client of the bank"""
-    print("Do you already have an account with us? (yes/no)")
+def request_login_or_signup():
+    """Asks the user to login or signup"""
+    print("\nPlease make a selection:")
+    print("Login | Signup")
     while True:
         user_input = input("> ").strip().lower()
-        if user_input == "yes" or user_input == "no":
+        valid_inputs = ["login", "log in", "signup", "sign up"]
+        if user_input in valid_inputs:
             return user_input
         else:
-            print("Please enter 'yes' or 'no'")
+            print("Please enter 'login' or 'signup'")
 
-def get_username():
+def get_username_and_password():
     """
-    Gets user username input and verifies username exists in database, then returns username and user_id values
+    Gets username and password, then verifies both are correct and correspond to the same account (user_id) before granting access
     """
-    while True:
-        username = input("Username: ").strip()
-        if username in u.usernames:
-            break
-        else:
-            print("That username does not exist")
-    
-    user_id = u.usernames[username]
-    return username, user_id
+    username = input("Username: ").strip()    
+    password = prompt("Password: ", is_password=True)
+    if username in u.usernames:
+        user_id = u.usernames[username]
+        return username, user_id, password
+    else: 
+        return "", "", ""
 
-def get_password(user_id):
-    """
-    Gets user password input confidentially and verifies password corresponds to account username
-    """
+def verify_username_and_password(username, user_id, password):    
+        """Verifies user credentials are correct before logging into account. Handles key error if username not found"""
+        try:
+            if (
+                (username == u.users[user_id]["username"]) and
+                (password == u.users[user_id]["password"])
+                ):
+                print("\nLogin successful!")
+                return False
+            else:
+                print("Incorrect username or password\n")
+                return True
+        
+        except KeyError:
+            print("Incorrect username or password\n")
+            return True
+
+def attempt_login():
+    print("\nPlease enter your username and password to login")
     while True:
-        password = prompt("Password: ", is_password=True)
-        if password == u.users[user_id]["password"]:
-            break
-        else:
-            print("Incorrect password")
-    
-    print("\nLogin successful!")
+        username, user_id, password = get_username_and_password()
+        verify_username_and_password(username, user_id, password)
+        
