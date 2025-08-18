@@ -19,32 +19,33 @@ def get_username_and_password():
     """
     username = input("Username: ").strip()    
     password = prompt("Password: ", is_password=True)
+
     if username in u.usernames:
         user_id = u.usernames[username]
         return username, user_id, password
     else: 
         return "", "", ""
 
-def verify_username_and_password(username, user_id, password):    
+def verify_username_and_password():    
         """Verifies user credentials are correct before logging into account. Handles key error if username not found"""
-        try:
-            if (
-                (username == u.users[user_id]["username"]) and
-                (password == u.users[user_id]["password"])
-                ):
-                print("\nLogin successful!")
-                return False
-            else:
+        while True:
+            username, user_id, password = get_username_and_password()
+            try:
+                if (
+                    (username == u.users[user_id]["username"]) and
+                    (password == u.users[user_id]["password"])
+                    ):
+                    print("\nLogin successful!")
+                    return
+                else:
+                    print("Incorrect username or password\n")
+                    continue
+            
+            except KeyError:
                 print("Incorrect username or password\n")
-                return True
-        
-        except KeyError:
-            print("Incorrect username or password\n")
-            return True
+                continue
 
 def attempt_login():
     print("\nPlease enter your username and password to login")
-    while True:
-        username, user_id, password = get_username_and_password()
-        verify_username_and_password(username, user_id, password)
+    verify_username_and_password()
         
