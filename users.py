@@ -178,7 +178,7 @@ def set_password(user_id):
 
 def set_client_info(user_id):
     """Sets account info of new client"""
-    print("Getting an account set up is fast and easy!")
+    print("\nGetting an account set up is fast and easy!")
     print("Please answer a few questions about yourself so we can get you started.\n")
     fname = set_fname(user_id)
     lname = set_lname(user_id)
